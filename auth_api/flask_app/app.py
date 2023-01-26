@@ -8,18 +8,18 @@ import shutil
 import sys
 import time
 
-from auth_config import Config, db, engine, insp, jwt, jwt_redis, migrate_obj
-from db_models import Group, User
 from flasgger import Swagger
 from flask import Flask
 from flask_migrate import init, migrate, upgrade
 
+from auth_config import Config, db, engine, insp, jwt, migrate_obj
+from db_models import Group, User
 from groups_bp.groups_bp import groups_bp
-from password_hash import check_password, hash_password
 from test_bp.test_bp import test_bp
 from users_bp.users_bp import users_bp
 
-BASE_PATH = "/v1"
+BASE_PATH = "/v01"
+# при добавлении новых версий буду копировать папки груп юзер и тест
 
 
 def db_initialize(app):
@@ -83,7 +83,7 @@ def create_app():
     app.config.from_object(Config())
     app.register_blueprint(groups_bp, url_prefix=f"{BASE_PATH}/groups")
     app.register_blueprint(users_bp, url_prefix=f"{BASE_PATH}/users")
-    app.register_blueprint(test_bp, url_prefix="/test")
+    app.register_blueprint(test_bp, url_prefix=f"{BASE_PATH}/test")
     swagger = Swagger(app, template=Config.SWAGGER_TEMPLATE)
     db.init_app(app)
     # engine = db.create_engine(Config.SQLALCHEMY_DATABASE_URI, {})

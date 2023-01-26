@@ -37,29 +37,3 @@ def admin_required():
         return decorated
 
     return wrapper
-
-
-# def user_required( ):
-#     """
-#         Декоратор для функций, которые должны выполняться с правами
-#         пользователя. Благодаря проверке verify_jwt_in_request
-#         может применяться без декоратора jwt_required, заменяя его
-#         и добавляя еще одну проверку - что обратившийся пользователь
-#         авторизован через jwt токен и получен id из токена. Если не входит - функция
-#         не выполняется и возвращается ошибка 403.
-#     """
-#     def wrapper(fn):
-#         @wraps(fn)
-#         def decorated(*args, **kwargs):
-#             try:
-#                 verify_jwt_in_request()
-#             except Exception as ex:
-#                 return jsonify({"msg": f"Bad access token: {ex}"}), HTTPStatus.UNAUTHORIZED
-#             current_user = User.query.get(get_jwt_identity())
-#             if not current_user:
-#                 return jsonify({"error": "No such user"}), HTTPStatus.FORBIDDEN
-#             return fn(*args, **kwargs)
-#
-#         return decorated
-#
-#     return wrapper

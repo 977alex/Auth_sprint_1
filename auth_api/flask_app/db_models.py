@@ -36,13 +36,13 @@ class User(db.Model):
         unique=True,
         nullable=False,
     )
-    login = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
-    password_hash = db.Column(db.String, nullable=False)
-    full_name = db.Column(db.String, nullable=False)
-    phone = db.Column(db.String)
-    avatar_link = db.Column(db.String)
-    address = db.Column(db.String)
+    login = db.Column(db.String(100), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(100), nullable=False)
+    full_name = db.Column(db.String(100), nullable=False)
+    phone = db.Column(db.String(100))
+    avatar_link = db.Column(db.String(100))
+    address = db.Column(db.String(100))
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
@@ -125,8 +125,8 @@ class Group(db.Model):
         unique=True,
         nullable=False,
     )
-    name = db.Column(db.String, unique=True, nullable=False)
-    description = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    description = db.Column(db.String(100), nullable=False)
 
     users = db.relationship(
         "User", secondary=user_group, lazy="subquery", back_populates="groups"
@@ -183,8 +183,8 @@ class History(db.Model):
         unique=True,
         nullable=False,
     )
-    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("auth.user.id"))
-    useragent = db.Column(db.String, nullable=False)
+    user_id = db.Column(UUID(as_uuid=True), db.ForeignKey("auth.user.id"), nullable=False)
+    useragent = db.Column(db.String(100), nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
 
     def __repr__(self):

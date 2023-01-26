@@ -114,7 +114,7 @@ def refresh():
     try:
         verify_jwt_in_request(refresh=True)
     except Exception as ex:
-        return (jsonify({"msg": f"Bad refresh token: {ex}"}), HTTPStatus.UNAUTHORIZED)
+        return jsonify({"msg": f"Bad refresh token: {ex}"}), HTTPStatus.UNAUTHORIZED
     identity = get_jwt_identity()
     access_token = create_access_token(identity=identity)
     refresh_token = create_refresh_token(identity=identity)
